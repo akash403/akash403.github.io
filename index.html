@@ -4,7 +4,7 @@
 <title>WHO CARES</title>
 <style>
 body{
-margin: 0px;
+margin: 10px;
 letter-spacing: 0.5px;
 word-spacing: 5px; 
 }
@@ -19,6 +19,7 @@ font-family: Courier New;
 }
 p{
 font-family: Georgia;
+letter-spacing: 2px;
 }
 
 </style>
@@ -26,7 +27,24 @@ font-family: Georgia;
 <body>
 <h1 align="Center">PERMANENT DOS DUE TO DESIGN FLAW</h1>
 <p>
-<span>Severity: </span>P3 a.k.a Medium
+<span>Severity: </span>P3 a.k.a Medium<br><br><hr>
+<span>Description: </span><br><br>
+This works on websites which locks out user account. For example in my case a user account was locked out after 5 incorrect login attempts.
+<br><br>
+Some sites implement account lockout for a specified period of time to keep its user safe from the intruder who is trying to gain access to account after some incorrect login attempts. <br><br>
+
+After account is locked out there are two ways for a user to login back again : <br><br>
+
+1) Either reset password and login directly<br>
+2) Wait for lockout time to finish and then login back again<br><br>
+
+So what i explained till now was about how a lockout works and why it is implemented and what happens after a user account is locked out!<br><br><hr>
+
+<Span>The vulnerable Flow :</span></bR></br>
+I observed that after an account is locked out , all sessions were destroyed(logged in user was logged out) which is suspicious itself.<br><br>So that means an attacker can exceed number of login attempts which will lockout their account and also log out that user whenever account lockout happens<br><br>
+So this means an attacker can loop requests forver to lockout user account and it will also log out user when account lockout happens.<br><br><hr>
+<span> Why is it a vulnerability?</span>
+A lockout happens to protect user account and has nothing to do with the current logged in session of user. As long as the session doesn't expire it shouldn't be invaliidated (except password resets,2fa activation,etc).
 </p>
 </body>
 </html>
