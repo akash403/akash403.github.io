@@ -5,7 +5,7 @@
 <style>
 body{
 margin: 10px;
-letter-spacing: 0.5px;
+letter-spacing: 0.4px;
 word-spacing: 5px; 
 }
 h1{
@@ -24,7 +24,7 @@ font-family: Georgia;
 letter-spacing: 1.3px;
 }
 
-#next,#lol{
+#next,#lol,#reproduce{
 line-height: 22px;
 font-family: Georgia;
 letter-spacing: 1.3px;
@@ -35,8 +35,8 @@ letter-spacing: 1.3px;
 <body>
 <h1 align="Center">PERMANENT DOS DUE TO DESIGN FLAW</h1>
 <p>
-<span>Severity: </span>P3 a.k.a Medium<br><br><hr>
-<span>Description: </span><br><br>
+<span>#Severity: </span>P3 a.k.a Medium<br><br><hr>
+<span>#Description: </span><br><br>
 <p class="des">This works on websites which locks out user account. For example in my case a user account was locked out after 5 incorrect login attempts.
 <br><br>
 Some sites implement account lockout for a specified period of time to keep its user safe from the intruder who is trying to gain access to account after some incorrect login attempts. <br><br>
@@ -48,11 +48,19 @@ After account is locked out there are two ways for a user to login back again : 
 
 So what i explained till now was about how a lockout works and why it is implemented and what happens after a user account is locked out!</p><br><br><hr>
 
-<Span>The vulnerable Flow :</span></bR></br>
+<Span>#The Vulnerable Flow :</span></bR></br>
 <p id="next">I observed that after an account is locked out , all sessions were destroyed(logged in user was logged out) which is suspicious itself.<br><br>So that means an attacker can exceed number of login attempts which will lockout their account and also log out that user whenever account lockout happens<br><br>
-So this means an attacker can loop requests forver to lockout user account and it will also log out user when account lockout happens.</p><br><br><hr>
-<span> Why is it a vulnerability?</span><br><br>
-<p id="lol">A lockout happens to protect user account and has nothing to do with the current logged in session of user. As long as the session doesn't expire it shouldn't be invaliidated (except password resets, 2fa activation, etc).</p>
+So this means an attacker can loop requests forever to lockout user account and it will also log out user when account lockout happens.</p><br><hr>
+<span>#How to reproduce or confirm the vulnerability?</span><br><br>
+<p id="reproduce">1) Assuming that example.com is our target website. We will at first verify if the account is locked out or not by trying multiple incorrect passwords.<br><br>
+2) Lets say we found out that after 20 incorrect login attempts (might be different on your target), our account is locked out so we got to know that the site locks out account after exceeding 20 incorrect login attempts<br><br>3) After confirming the website locks out account, now intercept the request of logging in (with correct credentials like email and password) with burp suite and send that to intruder and forward the request.<br><br>
+4) Now you are logged into your account in website and now in intruder bruteforce so that you exceed login attempts and account is locked out!<br><br>
+5) After your account is locked out , now go back to browser and refresh the website. If you are still logged in that means its not vulnerable and if you are logged out then it means it is vulnerable<br><br>
+
+So as an attacker we only need mail of victim and then we can loop requests in intruder such that the account is also locked out and the session will be destroyed and if we keep on looping those requests , the victim will never be able to login into his/her account!</p><hr>
+
+<span> #Why is it a Vulnerability?</span><br><br>
+<p id="lol">A lockout happens to protect user account and has nothing to do with the current logged in session of user. As long as the session doesn't expire it shouldn't be invalidated (except password resets, 2fa activation, etc).</p>
 </p>
 </body>
 </html>
